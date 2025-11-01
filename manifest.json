@@ -1,0 +1,11 @@
+{
+  "id": "open-in-ide",
+  "name": "Open in IDE",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Open the active Obsidian note in Cursor (with room for future IDE support).",
+  "author": "Erik Carlstedt",
+  "authorUrl": "",
+  "fundingUrl": "",
+  "isDesktopOnly": true
+}
