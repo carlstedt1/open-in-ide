@@ -1,26 +1,60 @@
-# vscode
-.vscode 
+# Dependencies
+node_modules/
 
-# Intellij
-*.iml
-.idea
-
-# npm
-node_modules
-
-# Don't include the compiled main.js file in the repo.
-# They should be uploaded to GitHub releases instead.
+# Build output
 main.js
+dist/
+build/
+*.tsbuildinfo
 
-# Exclude sourcemaps
+# Sourcemaps
 *.map
 
-# obsidian
+# Obsidian plugin data
 data.json
 
-# test artifacts
+# Test artifacts
 coverage/
+.nyc_output/
 .vitest_output/
 
-# Exclude macOS Finder (System Explorer) View States
+# Secrets (never commit)
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.cer
+*.crt
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Caches
+.eslintcache
+.turbo/
+.cache/
+npm-cache/
+
+# Editor directories
+.vscode/
+.idea/
+.cursor/
+
+# Editor files
+*.iml
+
+# OS files
 .DS_Store
+Thumbs.db
+.directory
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
