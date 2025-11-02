@@ -19,9 +19,9 @@ Next up: Neovim, JetBrains, and more.
 ## 🧩 Requirements
 - Desktop Obsidian (relies on `FileSystemAdapter`)
 - Cursor CLI on your PATH  
-  > Install within Cursor via `Cmd+Shift+P` → `Shell Command: Install "cursor"`  
-  > macOS Homebrew: `brew install --cask cursor`
-  > Windows: ensure Cursor is installed and restart the terminal so `%LocalAppData%\Programs\cursor\bin` is on PATH.
+  - Install within Cursor via `Cmd+Shift+P` → `Shell Command: Install "cursor"`  
+  - macOS Homebrew: `brew install --cask cursor`
+  - Windows: ensure Cursor is installed and restart the terminal so `%LocalAppData%\Programs\cursor\bin` is on PATH.
 - Tested on macOS; other platforms have not yet been formally certified
 
 ## 🚀 Installation
