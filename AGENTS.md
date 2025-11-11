@@ -45,11 +45,36 @@ Tests live in `__tests__/launcher/commandBuilder.test.ts` and verify the Cursor 
 
 ## Release workflow
 
-1. Update version numbers in `manifest.json`, `package.json`, and `versions.json`.
-2. Run `npm run build` to produce `main.js`.
-3. Package `main.js`, `manifest.json`, and `styles.css` (if present) as release artifacts.
-4. Update `CHANGELOG.md` and README screenshots/usage notes.
-5. Tag the release (`git tag <version>`), push the tag, and create the GitHub release with the artifacts attached.
+Follow the [Obsidian plugin submission guidelines](https://docs.obsidian.md/Plugins/Releasing/Submit+your+plugin) for release format.
+
+1. **Update version numbers** in `manifest.json`, `package.json`, and `versions.json`.
+2. **Build the plugin**: Run `npm run build` to produce `main.js`.
+3. **Update documentation**: Update `CHANGELOG.md` and README if needed.
+4. **Commit and push changes**:
+   ```bash
+   git add manifest.json package.json versions.json CHANGELOG.md README.md AGENTS.md main.js
+   git commit -m "Release <version>: <description>"
+   git push origin main
+   ```
+5. **Create git tag** (without "v" prefix):
+   ```bash
+   git tag <version>
+   git push origin <version>
+   ```
+6. **Create GitHub release with individual files** (per Obsidian guidelines):
+   ```bash
+   gh release create <version> main.js manifest.json \
+     --title "<version> - <Title>" \
+     --notes "<Release notes from CHANGELOG.md>"
+   ```
+   Note: Upload `main.js` and `manifest.json` as **individual binary attachments**, not as a ZIP file. Include `styles.css` if present.
+
+**Important**: According to Obsidian documentation, releases must include:
+- `main.js` (as individual file)
+- `manifest.json` (as individual file)
+- `styles.css` (optional, as individual file)
+
+Do NOT package these into a ZIP file for the release assets.
 
 ## Planned CI/CD pipeline
 
