@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Notice } from "obsidian";
+import { Notice } from "obsidian";
 import type { PluginSettings, PluginWithSettings } from "../settings";
 import { resolveVaultAbsolutePath } from "../utils/helpers";
 import { openFileInCursor } from "../launcher/cursorLauncher";
@@ -7,12 +7,8 @@ export function registerCommands(plugin: PluginWithSettings<PluginSettings>): vo
   plugin.addCommand({
     id: "open-in-ide",
     name: "Open in IDE (Cursor)",
-    editorCheckCallback: (checking, editor: Editor, view) => {
-      if (!(view instanceof MarkdownView)) {
-        return false;
-      }
-
-      const file = view.file;
+    checkCallback: (checking) => {
+      const file = plugin.app.workspace.getActiveFile();
       if (!file) {
         return false;
       }
@@ -21,9 +17,16 @@ export function registerCommands(plugin: PluginWithSettings<PluginSettings>): vo
         return true;
       }
 
-      const cursor = editor.getCursor();
-      const line = cursor?.line !== undefined ? cursor.line + 1 : undefined;
-      const column = cursor?.ch !== undefined ? cursor.ch + 1 : undefined;
+      // Try to get cursor position if an editor is available (for text files)
+      const editor = plugin.app.workspace.activeEditor?.editor;
+      let line: number | undefined;
+      let column: number | undefined;
+
+      if (editor) {
+        const cursor = editor.getCursor();
+        line = cursor?.line !== undefined ? cursor.line + 1 : undefined;
+        column = cursor?.ch !== undefined ? cursor.ch + 1 : undefined;
+      }
 
       openFileInCursor(plugin.app, plugin.settings, file, { line, column })
         .then((result) => {

@@ -33,7 +33,8 @@ export function buildCursorCommand(options: BuildCommandOptions): CursorCommand 
     const target = `${filePath}:${lineNumber}:${columnNumber}`;
     args.push("--goto", target.includes(" ") ? `"${target}"` : target);
   } else {
-    args.push(filePath);
+    // Quote file path if it contains spaces (same logic as --goto target)
+    args.push(filePath.includes(" ") ? `"${filePath}"` : filePath);
   }
 
   return {

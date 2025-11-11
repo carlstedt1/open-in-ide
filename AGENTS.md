@@ -30,10 +30,15 @@ Tests live in `__tests__/launcher/commandBuilder.test.ts` and verify the Cursor 
 
 ## Manual QA checklist
 
-- With a Cursor window already open on the vault, run the command → window remains and the target note is focused.
-- With Cursor closed, run the command → new window opens, vault loads, note is focused.
+- With a Cursor window already open on the vault, run the command → window remains and the target file is focused.
+- With Cursor closed, run the command → new window opens, vault loads, file is focused.
+- Test with markdown files (`.md`) → should work as before.
+- Test with `.base` files → should open correctly.
+- Test with `.canvas` files → should open correctly.
+- Test with other file types (`.txt`, `.json`, etc.) → should open correctly.
 - Paths containing spaces or iCloud-style prefixes resolve correctly.
-- Toggle **Open vault before file** off → command still opens the current note.
+- Files with multiple dots in name (e.g., `base.base`) open correctly.
+- Toggle **Open vault before file** off → command still opens the current file.
 - Set an invalid executable path → notice appears and no crash occurs.
 - Disable **Allow system fallback** → command fails gracefully when the CLI is missing.
 - When possible, test fallbacks on macOS (`open`), Windows (`start`), and Linux (`xdg-open`).
