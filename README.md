@@ -1,6 +1,6 @@
 # Open in IDE
 
-Open the current Obsidian file in your IDE of choice. Supports all file types in your vault (`.md`, `.base`, `.canvas`, and more). Version 0.2.0 extends support beyond markdown files, with Cursor support that reuses existing windows when possible and stages the vault before jumping to the file.
+Open the current Obsidian file in your IDE of choice. Supports all file types in your vault (`.md`, `.base`, `.canvas`, and more). Version 1.0.0 extends support beyond markdown files, with Cursor support that reuses existing windows when possible and stages the vault before jumping to the file.
 
 **Current version: 1.0.0**
 
