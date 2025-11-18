@@ -3,7 +3,7 @@
   "name": "Open in IDE",
   "version": "1.0.0",
   "minAppVersion": "1.5.0",
-  "description": "Open the active Obsidian file in Cursor (supports all file types including .base, .canvas, and more).",
+  "description": "Open the active file in Cursor (supports all file types including .base, .canvas, and more).",
   "author": "Erik Carlstedt",
   "authorUrl": "",
   "fundingUrl": "",
