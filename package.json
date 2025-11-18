@@ -1,6 +1,6 @@
 {
   "name": "open-in-ide",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Obsidian plugin that opens the active note in Cursor (and future IDEs).",
   "main": "main.js",
   "scripts": {

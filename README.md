@@ -2,7 +2,7 @@
 
 Open the current Obsidian file in your IDE of choice. Supports all file types in your vault (`.md`, `.base`, `.canvas`, and more). Version 0.2.0 extends support beyond markdown files, with Cursor support that reuses existing windows when possible and stages the vault before jumping to the file.
 
-**Current version: 0.2.0**
+**Current version: 1.0.0**
 
 ## ✨ Features
 - Command palette action + optional hotkey
@@ -12,10 +12,10 @@ Open the current Obsidian file in your IDE of choice. Supports all file types in
 
 ## ✅ Currently supported IDEs
 
-| IDE    | Status            | Notes                  |
-|--------|-------------------|------------------------|
-| Cursor | ✅ Supported      | macOS tested, CLI required |
-| VSCode | ❌ Not supported yet | Coming soon |
+| IDE    | Status              | Notes                      |
+| ------ | ------------------- | -------------------------- |
+| Cursor | ✅ Supported         | macOS tested, CLI required |
+| VSCode | ❌ Not supported yet | Coming soon                |
 Next up: Neovim, JetBrains, and more.
 
 ## 🧩 Requirements
@@ -28,9 +28,13 @@ Next up: Neovim, JetBrains, and more.
 
 ## 🚀 Installation
 
-1. Copy this folder into your vault as `Vault/.obsidian/plugins/open-in-ide`
-2. Enable **Open in IDE** in **Settings → Community plugins**
-3. Optional: assign a hotkey in **Settings → Hotkeys**
+1. Open **Settings** → **Community plugins** in Obsidian.
+2. Search for **Open in IDE**.
+3. Click **Install** and then **Enable**.
+
+Alternatively, for manual installation:
+1. Copy `main.js` and `manifest.json` into `Vault/.obsidian/plugins/open-in-ide/`.
+2. Reload Obsidian and enable the plugin.
 
 ## 🧭 Usage
 
@@ -41,12 +45,12 @@ Next up: Neovim, JetBrains, and more.
 
 ## ⚙️ Settings
 
-| Setting                 | Description                                                  |
-|-------------------------|--------------------------------------------------------------|
-| Cursor executable path  | Override the Cursor binary location                          |
-| Reuse existing window   | Prefer existing Cursor windows for the vault                 |
-| Open vault before file  | Ensure the vault is loaded into Cursor before the note       |
-| Allow system fallback   | Use `open` / `start` / `xdg-open` if the CLI cannot be found |
+| Setting                | Description                                                  |
+| ---------------------- | ------------------------------------------------------------ |
+| Cursor executable path | Override the Cursor binary location                          |
+| Reuse existing window  | Prefer existing Cursor windows for the vault                 |
+| Open vault before file | Ensure the vault is loaded into Cursor before the note       |
+| Allow system fallback  | Use `open` / `start` / `xdg-open` if the CLI cannot be found |
 
 ## 🪲 Troubleshooting
 - "Cursor executable not found …" → update the path or install the CLI
