@@ -15,6 +15,14 @@ export interface CursorCommand {
   args: string[];
 }
 
+export interface BuildWorkspaceCommandOptions {
+  command: string;
+  workspaceFilePath: string;
+  filePath: string;
+  line?: number;
+  column?: number;
+}
+
 export function buildCursorCommand(options: BuildCommandOptions): CursorCommand {
   const { command, vaultPath, filePath, line, column, reuse, includeVault } = options;
   const args: string[] = [];
@@ -33,12 +41,27 @@ export function buildCursorCommand(options: BuildCommandOptions): CursorCommand 
     const target = `${filePath}:${lineNumber}:${columnNumber}`;
     args.push("--goto", target.includes(" ") ? `"${target}"` : target);
   } else {
-    // Quote file path if it contains spaces (same logic as --goto target)
-    args.push(filePath.includes(" ") ? `"${filePath}"` : filePath);
+    args.push(filePath);
   }
 
   return {
     command,
     args
   };
+}
+
+export function buildCursorWorkspaceCommand(options: BuildWorkspaceCommandOptions): CursorCommand {
+  const { command, workspaceFilePath, filePath, line, column } = options;
+  const args: string[] = [workspaceFilePath];
+
+  if (line !== undefined) {
+    const lineNumber = Math.max(1, line);
+    const columnNumber = column !== undefined ? Math.max(1, column) : 1;
+    const target = `${filePath}:${lineNumber}:${columnNumber}`;
+    args.push("--goto", target.includes(" ") ? `"${target}"` : target);
+  } else {
+    args.push(filePath);
+  }
+
+  return { command, args };
 }

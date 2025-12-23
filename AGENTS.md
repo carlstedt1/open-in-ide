@@ -32,6 +32,8 @@ Tests live in `__tests__/launcher/commandBuilder.test.ts` and verify the Cursor 
 
 - With a Cursor window already open on the vault, run the command → window remains and the target file is focused.
 - With Cursor closed, run the command → new window opens, vault loads, file is focused.
+- If **Cursor workspace file** is configured and the active file belongs to that workspace, run the command → the workspace window is focused (or opened) before the file is targeted.
+- If Obsidian was launched without a full PATH, set **Cursor executable path** and verify no `spawn cursor ENOENT` errors occur.
 - Test with markdown files (`.md`) → should work as before.
 - Test with `.base` files → should open correctly.
 - Test with `.canvas` files → should open correctly.

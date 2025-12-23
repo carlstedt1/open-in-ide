@@ -38,6 +38,7 @@ pnpm-debug.log*
 .turbo/
 .cache/
 npm-cache/
+.npm-cache/
 
 # Editor directories
 .vscode/

@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "Vault Root",
+      "path": "./VaultRoot"
+    },
+    {
+      "name": "Python Scripts",
+      "path": "./VaultRoot/.obsidian/python_scripts"
+    }
+  ]
+}
+

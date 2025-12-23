@@ -3,6 +3,8 @@ import { App, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
 export interface PluginSettings {
   /** Absolute path to the Cursor CLI binary. Leave empty to use PATH lookup. */
   cursorExecutablePath: string;
+  /** Optional path to a .code-workspace file to target when the active file belongs to it. */
+  cursorWorkspaceFilePath: string;
   /** Attempt to reuse the existing Cursor window if one is open on the vault. */
   reuseExistingWindow: boolean;
   /** Open the vault folder before targeting the active file. */
@@ -13,6 +15,7 @@ export interface PluginSettings {
 
 export const DEFAULT_SETTINGS: PluginSettings = {
   cursorExecutablePath: "",
+  cursorWorkspaceFilePath: "",
   reuseExistingWindow: true,
   openVaultBeforeFile: true,
   allowSystemFallback: true
@@ -50,6 +53,19 @@ export class OpenInIDESettingTab extends PluginSettingTab {
           .setValue(this.plugin.settings.cursorExecutablePath)
           .onChange(async (value) => {
             this.plugin.settings.cursorExecutablePath = value.trim();
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName("Cursor workspace file (optional)")
+      .setDesc("If set, the plugin will try to focus/open this .code-workspace when the active file is inside one of its folders.")
+      .addText((text) =>
+        text
+          .setPlaceholder("/Users/you/Obsidian-Main.code-workspace")
+          .setValue(this.plugin.settings.cursorWorkspaceFilePath)
+          .onChange(async (value) => {
+            this.plugin.settings.cursorWorkspaceFilePath = value.trim();
             await this.plugin.saveSettings();
           })
       );

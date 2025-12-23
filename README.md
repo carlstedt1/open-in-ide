@@ -1,14 +1,15 @@
 # Open in IDE
 
-Open the current Obsidian file in your IDE of choice. Supports all file types in your vault (`.md`, `.base`, `.canvas`, and more). Version 1.0.0 extends support beyond markdown files, with Cursor support that reuses existing windows when possible and stages the vault before jumping to the file.
+Open the current Obsidian file in your IDE of choice. Supports all file types in your vault (`.md`, `.base`, `.canvas`, and more). Cursor support reuses existing windows when possible and can optionally focus a configured Cursor workspace (`.code-workspace`) before jumping to the file.
 
-**Current version: 1.0.0**
+**Current version: 1.1.0**
 
 ## ✨ Features
 - Command palette action + optional hotkey
 - Reuse an existing Cursor window (or spawn a new one)
+- (Optional) Focus a specific Cursor workspace (`.code-workspace`) when the active file belongs to it
 - Jump to the active file and cursor position (supports all file types)
-- Settings for CLI path, vault staging, reuse behaviour, and OS fallbacks
+- Settings for CLI path, workspace targeting, vault staging, reuse behaviour, and OS fallbacks
 
 ## ✅ Currently supported IDEs
 
@@ -20,10 +21,11 @@ Next up: Neovim, JetBrains, and more.
 
 ## 🧩 Requirements
 - Desktop Obsidian (relies on `FileSystemAdapter`)
-- Cursor CLI on your PATH  
+- Cursor CLI installed  
   - Install within Cursor via `Cmd+Shift+P` → `Shell Command: Install "cursor"`  
   - macOS Homebrew: `brew install --cask cursor`
   - Windows: ensure Cursor is installed and restart the terminal so `%LocalAppData%\Programs\cursor\bin` is on PATH.
+- If Obsidian can’t find `cursor` on PATH (common when launched from Finder), set **Cursor executable path** in settings.
 - Tested on macOS; other platforms have not yet been formally certified
 
 ## 🚀 Installation
@@ -48,6 +50,7 @@ Alternatively, for manual installation:
 | Setting                | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |
 | Cursor executable path | Override the Cursor binary location                          |
+| Cursor workspace file  | Optional `.code-workspace` to focus/open when the file belongs to it |
 | Reuse existing window  | Prefer existing Cursor windows for the vault                 |
 | Open vault before file | Ensure the vault is loaded into Cursor before the note       |
 | Allow system fallback  | Use `open` / `start` / `xdg-open` if the CLI cannot be found |
@@ -62,6 +65,7 @@ Alternatively, for manual installation:
 - Cursor CLI is strongly recommended—fallback launchers are best-effort
 - Only supports files inside the vault
 - Window reuse ultimately depends on the Cursor CLI
+- The plugin can’t inspect “currently open” Cursor windows; it targets a workspace/folder and lets Cursor focus an existing matching window when available
 - Cursor position is only preserved for files with an active text editor
 
 See [CHANGELOG.md](./CHANGELOG.md) for release history and [AGENTS.md](./AGENTS.md) for developer notes.

@@ -4,7 +4,8 @@ import { existsSync } from "fs";
 import type { PluginSettings } from "../settings";
 import { assertDesktopFeature, resolveVaultAbsolutePath, resolveVaultRoot } from "../utils/helpers";
 import { pathToFileURL } from "url";
-import { buildCursorCommand } from "./testable";
+import { buildCursorCommand, buildCursorWorkspaceCommand } from "./testable";
+import { findWorkspaceMatchForFile } from "../workspaces/workspaceMatcher";
 
 export interface LaunchResult {
   ok: boolean;
@@ -33,12 +34,50 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
   const vaultPath = resolveVaultRoot(app);
   const command = resolveCursorExecutable(settings);
 
+  const workspaceMatch = settings.cursorWorkspaceFilePath
+    ? findWorkspaceMatchForFile(settings.cursorWorkspaceFilePath, filePath)
+    : null;
+
+  if (settings.cursorWorkspaceFilePath && !workspaceMatch) {
+    console.log("[open-in-ide] Cursor workspace configured but file is not in workspace folders", {
+      workspaceFilePath: settings.cursorWorkspaceFilePath,
+      filePath,
+      vaultPath
+    });
+  }
+
   if (settings.cursorExecutablePath && !existsSync(settings.cursorExecutablePath)) {
     console.error("[open-in-ide] Cursor executable missing", settings.cursorExecutablePath);
     return {
       ok: false,
       message: `Cursor executable not found at ${settings.cursorExecutablePath}. Update the setting or clear it to use PATH lookup.`
     };
+  }
+
+  if (workspaceMatch) {
+    const { command: workspaceCommand, args: workspaceArgs } = buildCursorWorkspaceCommand({
+      command,
+      workspaceFilePath: workspaceMatch.workspaceFilePath,
+      filePath,
+      line: position?.line,
+      column: position?.column
+    });
+
+    console.log("[open-in-ide] Launching Cursor workspace", {
+      command: workspaceCommand,
+      args: workspaceArgs,
+      filePath,
+      workspaceFilePath: workspaceMatch.workspaceFilePath,
+      matchedFolderPath: workspaceMatch.matchedFolderPath,
+      position
+    });
+
+    try {
+      await spawnDetached(workspaceCommand, workspaceArgs);
+      return { ok: true, message: "Sent to Cursor workspace." };
+    } catch (error) {
+      console.warn("[open-in-ide] Failed to open Cursor workspace", error);
+    }
   }
 
   if (settings.openVaultBeforeFile && vaultPath && !initializedVaults.has(vaultPath)) {
@@ -111,6 +150,16 @@ function resolveCursorExecutable(settings: PluginSettings): string {
   if (settings.cursorExecutablePath) {
     return settings.cursorExecutablePath;
   }
+
+  if (Platform.isMacOS) {
+    const candidates = ["/usr/local/bin/cursor", "/opt/homebrew/bin/cursor"];
+    for (const candidate of candidates) {
+      if (existsSync(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
   return Platform.isWin ? "cursor.exe" : "cursor";
 }
 
