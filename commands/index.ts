@@ -5,8 +5,8 @@ import { openFileInCursor } from "../launcher/cursorLauncher";
 
 export function registerCommands(plugin: PluginWithSettings<PluginSettings>): void {
   plugin.addCommand({
-    id: "open-in-ide",
-    name: "Open in IDE (Cursor)",
+    id: "open-in-cursor",
+    name: "Open in Cursor",
     checkCallback: (checking) => {
       const file = plugin.app.workspace.getActiveFile();
       if (!file) {

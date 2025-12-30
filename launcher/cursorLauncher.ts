@@ -39,7 +39,7 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
     : null;
 
   if (settings.cursorWorkspaceFilePath && !workspaceMatch) {
-    console.log("[open-in-ide] Cursor workspace configured but file is not in workspace folders", {
+    console.debug("[open-in-ide] Cursor workspace configured but file is not in workspace folders", {
       workspaceFilePath: settings.cursorWorkspaceFilePath,
       filePath,
       vaultPath
@@ -63,7 +63,7 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
       column: position?.column
     });
 
-    console.log("[open-in-ide] Launching Cursor workspace", {
+    console.debug("[open-in-ide] Launching Cursor workspace", {
       command: workspaceCommand,
       args: workspaceArgs,
       filePath,
@@ -82,7 +82,7 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
 
   if (settings.openVaultBeforeFile && vaultPath && !initializedVaults.has(vaultPath)) {
     const addArgs = buildAddFolderArgs(settings, vaultPath);
-    console.log("[open-in-ide] Ensuring vault present in Cursor workspace", {
+    console.debug("[open-in-ide] Ensuring vault present in Cursor workspace", {
       command,
       addArgs,
       vaultPath
@@ -108,7 +108,7 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
     includeVault: Boolean(settings.openVaultBeforeFile && vaultPath)
   });
 
-  console.log("[open-in-ide] Launching Cursor CLI", {
+  console.debug("[open-in-ide] Launching Cursor CLI", {
     command: handlerCommand,
     args,
     filePath,
@@ -133,17 +133,6 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
       message: `Failed to launch Cursor: ${(error as Error).message}`
     };
   }
-}
-
-function buildGotoTarget(filePath: string, position?: CursorPosition): string | null {
-  if (!position || position.line === undefined) {
-    return null;
-  }
-
-  const line = Math.max(1, position.line);
-  const column = position.column !== undefined ? Math.max(1, position.column) : 1;
-  const target = `${filePath}:${line}:${column}`;
-  return target.includes(" ") ? `"${target}"` : target;
 }
 
 function resolveCursorExecutable(settings: PluginSettings): string {
@@ -212,14 +201,14 @@ async function launchViaSystem(filePath: string, vaultPath: string | null, setti
   try {
     if (Platform.isMacOS) {
       const macArgs = buildMacArgs(filePath, vaultPath, settings);
-      console.log("[open-in-ide] macOS fallback", { macArgs });
+      console.debug("[open-in-ide] macOS fallback", { macArgs });
       await spawnDetached("open", macArgs);
       return { ok: true, message: "Fallback: opened via macOS." };
     }
 
     if (Platform.isWin) {
       const winArgs = buildWindowsArgs(filePath);
-      console.log("[open-in-ide] Windows fallback", { winArgs });
+      console.debug("[open-in-ide] Windows fallback", { winArgs });
       await spawnDetached("cmd", winArgs);
       return { ok: true, message: "Fallback: opened via Windows shell." };
     }

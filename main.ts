@@ -13,7 +13,7 @@ export default class OpenInIDEPlugin extends Plugin {
     this.addSettingTab(new OpenInIDESettingTab(this.app, this));
   }
 
-  async onunload(): Promise<void> {
+  onunload(): void {
     // Clean up resources that are not already handled by register* helpers.
   }
 
