@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1 - 2025-12-30
+- Compliance fixes for Obsidian review: updated command id/name, removed disallowed `console.log`, and corrected `onunload` typing.
+
 ## 1.1.0 - 2025-12-23
 - **Cursor workspace targeting**: Optional `.code-workspace` setting that focuses/opens the workspace when the active file belongs to it.
 - **More reliable Cursor CLI launching on macOS**: Automatically tries common CLI locations when PATH lookup fails.
