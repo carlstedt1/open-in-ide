@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.2 - 2026-01-02
+- Fixed sentence-case issues in UI text (command, settings, and notices) to satisfy Obsidian review automation.
+
 ## 1.1.1 - 2025-12-30
 - Compliance fixes for Obsidian review: updated command id/name, removed disallowed `console.log`, and corrected `onunload` typing.
 

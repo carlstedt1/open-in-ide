@@ -74,7 +74,7 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
 
     try {
       await spawnDetached(workspaceCommand, workspaceArgs);
-      return { ok: true, message: "Sent to Cursor workspace." };
+      return { ok: true, message: "Cursor workspace request sent." };
     } catch (error) {
       console.warn("[open-in-ide] Failed to open Cursor workspace", error);
     }
@@ -119,7 +119,7 @@ export async function openFileInCursor(app: App, settings: PluginSettings, file:
   try {
     await spawnDetached(handlerCommand, args);
     const target = args.includes("--goto") ? args[args.length - 1] : filePath;
-    return { ok: true, message: `Sent to Cursor (${target}).` };
+    return { ok: true, message: `Cursor request sent (${target}).` };
   } catch (error) {
     if (isMissingExecutableError(error) && settings.allowSystemFallback) {
       const fallback = await launchViaSystem(filePath, vaultPath, settings);
@@ -203,18 +203,18 @@ async function launchViaSystem(filePath: string, vaultPath: string | null, setti
       const macArgs = buildMacArgs(filePath, vaultPath, settings);
       console.debug("[open-in-ide] macOS fallback", { macArgs });
       await spawnDetached("open", macArgs);
-      return { ok: true, message: "Fallback: opened via macOS." };
+      return { ok: true, message: "Fallback: opened via the system opener." };
     }
 
     if (Platform.isWin) {
       const winArgs = buildWindowsArgs(filePath);
       console.debug("[open-in-ide] Windows fallback", { winArgs });
       await spawnDetached("cmd", winArgs);
-      return { ok: true, message: "Fallback: opened via Windows shell." };
+      return { ok: true, message: "Fallback: opened via the system opener." };
     }
 
     await spawnDetached("xdg-open", [filePath]);
-    return { ok: true, message: "Fallback: opened via xdg-open." };
+    return { ok: true, message: "Fallback: opened via the system opener." };
   } catch (error) {
     return {
       ok: false,

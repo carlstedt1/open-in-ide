@@ -6,7 +6,7 @@ import { openFileInCursor } from "../launcher/cursorLauncher";
 export function registerCommands(plugin: PluginWithSettings<PluginSettings>): void {
   plugin.addCommand({
     id: "open-in-cursor",
-    name: "Open in Cursor",
+    name: "Open in cursor",
     checkCallback: (checking) => {
       const file = plugin.app.workspace.getActiveFile();
       if (!file) {
@@ -33,14 +33,14 @@ export function registerCommands(plugin: PluginWithSettings<PluginSettings>): vo
           if (result.ok) {
             const absolute = resolveVaultAbsolutePath(plugin.app, file);
             const payload = absolute ?? `Vault-relative path: ${file.path}`;
-            new Notice(result.message ?? `Opened in Cursor: ${payload}`);
+            new Notice(result.message ?? `Opened in cursor: ${payload}`);
           } else if (result.message) {
             new Notice(result.message);
           }
         })
         .catch((error) => {
           console.error("[open-in-ide] failed to launch Cursor", error);
-          new Notice("Failed to launch Cursor. Check console for details.");
+          new Notice("Failed to launch cursor. Check the console for details.");
         });
 
       return true;

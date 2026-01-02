@@ -2,7 +2,7 @@
 
 Open the current Obsidian file in your IDE of choice. Supports all file types in your vault (`.md`, `.base`, `.canvas`, and more). Cursor support reuses existing windows when possible and can optionally focus a configured Cursor workspace (`.code-workspace`) before jumping to the file.
 
-**Current version: 1.1.1**
+**Current version: 1.1.2**
 
 ## ✨ Features
 - Command palette action + optional hotkey

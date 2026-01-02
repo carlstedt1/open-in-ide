@@ -46,7 +46,7 @@ export class OpenInIDESettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Cursor executable path")
-      .setDesc("Optional absolute path to the Cursor CLI. Leave blank to rely on the PATH lookup.")
+      .setDesc("Optional absolute path to the cursor executable. Leave blank to rely on your system path.")
       .addText((text) =>
         text
           .setPlaceholder("/usr/local/bin/cursor")
@@ -72,7 +72,7 @@ export class OpenInIDESettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Reuse existing window")
-      .setDesc("Request Cursor to reuse an open window for this vault when possible.")
+      .setDesc("Request cursor to reuse an open window for this vault when possible.")
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.reuseExistingWindow)
@@ -84,7 +84,7 @@ export class OpenInIDESettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Open vault before file")
-      .setDesc("Open the vault root in Cursor before targeting the active note.")
+      .setDesc("Open the vault root in cursor before targeting the active note.")
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.openVaultBeforeFile)
@@ -96,7 +96,7 @@ export class OpenInIDESettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Allow system fallback")
-      .setDesc("Use the OS opener if the Cursor CLI cannot be found.")
+      .setDesc("Use the system opener if the cursor executable cannot be found.")
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.allowSystemFallback)
@@ -104,7 +104,7 @@ export class OpenInIDESettingTab extends PluginSettingTab {
             this.plugin.settings.allowSystemFallback = value;
             await this.plugin.saveSettings();
             if (!value) {
-              new Notice("System fallback disabled. The command will fail if the Cursor CLI is unavailable.");
+              new Notice("System fallback disabled. The command will fail if the cursor executable is unavailable.");
             }
           })
       );
